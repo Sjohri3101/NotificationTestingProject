@@ -1,0 +1,17 @@
+<form action="submit" method="post">
+    {% csrf_token %}
+    <input type="file" name="imageupload" value="">
+    <button type="submit">Submit</button>
+</form> 
+<table>
+    <tr>
+        <th>Date and Time</th>
+        <th>Image</th>
+    </tr>
+    {% for i in data %}
+    <tr>
+        <td>{{i.date}}</td>
+        <td><img src="{{i.images.url}}" style="width:200px; height:150px"/></td>
+    </tr>
+    {% endfor %}
+</table>

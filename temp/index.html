@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Notification</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  {% comment %} <style>
+    /* Style for the scrollable container */
+    .scrollable-container {
+        width: 300px; /* Adjust as needed */
+        height: 100px; /* Adjust as needed */
+        overflow: auto; /* Add scrollbars when content overflows */
+        border: 1px solid #ccc; /* Optional: Add border for visualization */
+        padding: 10px; /* Optional: Add padding for spacing */
+    }
+</style> {% endcomment %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+  <button type="button" id="notify" style="margin-top:20px; position:relative; height:50px; width:60px; font-size:40px; "><i class="fa-regular fa-bell"></i></button>
+  <p style="background-color:red; width:20px; height:20px; border-radius:20px; position:absolute; top:0px; left:50px; color: white; font-size: 16px; text-align: center;" id="data">1</p>
+  <p style="background-color:red; width:20px; height:20px; border-radius:20px; position:absolute; top:0px; left:50px; color: white; font-size: 16px; text-align: center;" id="data-new">0</p>
+  <div id="notification" style="width:250px; height:auto; border:2px solid grey;">
+  <p>Notification data</p>
+  {% for i in data %}
+  <p>
+    <img src="{{i.images.url}}" style="width:50px; height:30px"/> {{ i.date }} 
+  </p>
+  {% endfor %}
+</div>
+
+<br><br>
+<span>Total Data : {{c}}</span>
+  <br><br>  
+  <p>Recent Notification</p>
+  <div class="scrollable-container">
+  <table style="background-color:wheat;">
+    {% for i in data %}
+    <tr>
+        <td>{{i.date}}</td>
+        <td><img src="{{i.images.url}}" style="width:100px; height:60px"/></td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td><a href="#">Read More..</a></td>
+    </tr>
+</table>
+</div>
+  <br><br>
+  <form action="submit" method="post">
+    {% csrf_token %}
+    <input type="file" name="imageupload" value="">
+    <button type="submit">Submit</button>
+</form> 
+
+<script>
+  $(document).ready(function(){
+    $("#notification").hide()
+    $("#data-new").hide();
+
+    $("#notify").click(function(){
+      $("#notification").slideToggle();
+      $("#data").hide();
+      $("#data-new").show();
+  })
+})
+</script>
+</body>
+</html>
